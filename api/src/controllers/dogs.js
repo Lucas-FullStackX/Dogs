@@ -1,5 +1,5 @@
 const axios = require("axios");
-const { Dog, temperament } = require("../db");
+const { Dog } = require("../db");
 const ModelCrud = require("./index");
 const { URL_API, URL_S } = require("../utils/index");
 
@@ -40,20 +40,8 @@ class DogModel extends ModelCrud {
       })
       .catch((err) => next(err));
   };
-  name = (req, res, next) => {};
+
   pages = (req, res, next) => {
-    const { page } = req.params;
-    const myDog = this.model.findAll();
-    const apiDogs = axios.get(URL_API);
-    Promise.all([myDog, apiDogs])
-      .then((results) => {
-        const [myResults, apiResults] = results;
-        const response = myResults.concat(apiResults.data);
-        res.send(response.slice(8 * (page - 1), 8 * page));
-      })
-      .catch((err) => next(err));
-  };
-  exact = (req, res, next) => {
     const { page } = req.params;
     const myDog = this.model.findAll();
     const apiDogs = axios.get(URL_API);
