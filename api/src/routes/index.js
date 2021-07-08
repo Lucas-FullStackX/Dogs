@@ -5,13 +5,15 @@ const { Router } = require("express");
 const getTemperament = require("../controllers/temperament");
 const dogController = require("../controllers/dogs");
 const router = Router();
+const { getById, addDog } = require("../controllers/index");
+const { getAll, dogs, pages } = require("../controllers/dogs");
 
-router.get("/", dogController.getAll);
-router.get("/dogs", dogController.dogs);
-router.get("/dog/:page", dogController.pages);
-router.get("/dogs/:id", dogController.getById);
-router.post("/dog", dogController.addDog);
+router.get("/", getAll);
+router.get("/dogs", dogs);
+router.get("/dog/:page", pages);
+router.get("/dogs/:id", getById);
 router.get("/temperament", getTemperament);
+router.post("/dog", addDog);
 
 // Configurar los routers
 // Ejemplo: router.use('/auth', authRouter);

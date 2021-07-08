@@ -29,7 +29,7 @@ module.exports = function getTemperament(req, res, next) {
         var tempsArr = [];
         uniqueTemp.forEach((item) => {
           const id = uuidv4();
-          tempArr.push({
+          tempsArr.push({
             id,
             name: item,
           });

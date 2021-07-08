@@ -1,45 +1,72 @@
 const axios = require("axios");
 const { URL_API, URL_S } = require("../utils/index");
 const { v4: uuidv4 } = require("uuid");
+const { Dog, Temperament } = require("../db");
 
-class MoldelCrud {
-  constructor(model) {
-    this.model = model;
-  }
-  getById = (req, res, next) => {
-    const { id } = req.params;
-    const myDog = this.model.findAll();
-    const apiDogs = axios.get(URL_S + id);
-    Promise.all([myDog, apiDogs])
+const apiKey = process.env.API_KEY;
+
+function getById(req, res, next) {
+  const { id } = req.params;
+  if (id.length > 3) {
+    Dog.findByPk(id, { include: Temperament })
       .then((results) => {
-        const [myResults, apiResults] = results;
-        const response = myResults.concat(apiResults.data);
-        let arr = [];
-        response.map((p) =>
-          arr.push({
-            id: p.id,
-            name: p.name,
-            temperament: p.temperament,
-            weight: p.weight,
-            height: p.height,
-            years: p.life_span,
-          })
-        );
-        res.send(arr);
+        const { id, name, height, weight, years, temperaments } = results;
+        const temperament = temperaments[0].temperament;
+        let obj = { id, name, height, weight, years, temperament, image };
+        res.json(obj);
       })
       .catch((err) => next(err));
-  };
-  addDog = (req, res, next) => {
-    const body = req.body;
-    const uuid = uuidv4();
-    return this.model
-      .create({
-        ...body,
-        id: uuid,
+  } else {
+    axios
+      .get(`${URL_API}?api_key=${apiKey}`)
+      .then((results) => {
+        const data = results.data;
+        let index = data.findIndex((p) => p.id == id);
+        const props = data[index];
+        return res.json({
+          id: props.id,
+          name: props.name,
+          height: props.height.imperial,
+          weight: props.weight.imperial,
+          years: props.life_span,
+          temperament: props.temperament,
+          image: props.image.url,
+        });
       })
-      .then((d) => res.send(d))
       .catch((err) => next(err));
-  };
+  }
 }
+async function addDog(req, res, next) {
+  const { name, weight, height, life_span, temperament } = req.body;
 
-module.exports = MoldelCrud;
+  const ide = uuidv4();
+
+  try {
+    const createdDog = await Dog.create({
+      id: ide,
+      name,
+      weight,
+      height,
+      years: life_span,
+    });
+    const newDog = [createdDog];
+    for await (const temp of temperament) {
+      const ide2 = uuidv4();
+      let createdTemperament = await Temperament.findOne({
+        where: { name: temp },
+      });
+
+      if (!createdTemperament) {
+        createdTemperament = await Temperament.create({
+          id: ide2,
+          name: temp,
+        });
+      }
+      newDog.push(createdTemperament);
+    }
+    return res.json(newDog);
+  } catch (error) {
+    next(error);
+  }
+}
+module.exports = { getById, addDog };
