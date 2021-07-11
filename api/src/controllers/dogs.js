@@ -43,7 +43,8 @@ function pages(req, res, next) {
     .then((results) => {
       const [myResults, apiResults] = results;
       const response = myResults.concat(apiResults.data);
-      res.send(response.slice(8 * (page - 1), 8 * page));
+      resultDog(response);
+      res.json(response.slice(8 * (page - 1), 8 * page));
     })
     .catch((err) => next(err));
 }

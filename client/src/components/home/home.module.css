@@ -1,0 +1,9 @@
+.cards{
+    display: grid;
+
+   height: 100vh; /*ocupa el alto de la pantalla*/
+
+   grid-template-columns: repeat(2, 1fr); /*los elementos ocuparan 3 columnas*/
+
+   grid-template-rows: repeat(2, 1fr);  /*los elementos ocuparan 2 filas*/
+}

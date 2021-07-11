@@ -38,7 +38,8 @@ function getById(req, res, next) {
 }
 async function addDog(req, res, next) {
   const { name, weight, height, life_span, temperament } = req.body;
-
+  const image =
+    "https://ep01.epimg.net/verne/imagenes/2015/08/04/articulo/1438683590_611299_1438691031_noticia_normal.jpg";
   const ide = uuidv4();
 
   try {
@@ -48,6 +49,7 @@ async function addDog(req, res, next) {
       weight,
       height,
       years: life_span,
+      image,
     });
     const newDog = [createdDog];
     for await (const temp of temperament) {
