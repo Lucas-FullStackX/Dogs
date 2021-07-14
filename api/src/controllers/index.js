@@ -36,7 +36,7 @@ function getById(req, res, next) {
       .catch((err) => next(err));
   }
 }
-async function addDog(req, res, next) {
+/* async function addDog(req, res, next) {
   const { name, weight, height, life_span, temperament } = req.body;
   const image =
     "https://ep01.epimg.net/verne/imagenes/2015/08/04/articulo/1438683590_611299_1438691031_noticia_normal.jpg";
@@ -66,7 +66,46 @@ async function addDog(req, res, next) {
       }
       newDog.push(createdTemperament);
     }
+    await createdDog.addTemperament(createdTemperament);
+
     return res.json(newDog);
+  } catch (error) {
+    next(error);
+  }
+} */
+async function addDog(req, res, next) {
+  const { name, weight, height, life_span, temperament } = req.body;
+
+  const ide = uuidv4();
+  const image =
+    "https://ep01.epimg.net/verne/imagenes/2015/08/04/articulo/1438683590_611299_1438691031_noticia_normal.jpg";
+  try {
+    const createdDog = await Dog.create({
+      id: ide,
+      name,
+      weight,
+      height,
+      years: life_span,
+      image,
+    });
+
+    for await (let temp of temperament) {
+      const ide2 = uuidv4();
+      let createdTemperament = await Temperament.findOne({
+        where: { name: temp },
+      });
+
+      if (!createdTemperament)
+        createdTemperament = await Temperament.create({
+          id: ide2,
+          name: temp,
+        });
+
+      await createdDog.addTemperament(createdTemperament);
+      // =
+      await createdTemperament.addDog(createdDog);
+    }
+    res.send("creado");
   } catch (error) {
     next(error);
   }

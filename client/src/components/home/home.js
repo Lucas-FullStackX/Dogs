@@ -1,29 +1,28 @@
 import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import Card from "../Card/Card";
 import styles from "./home.module.css";
+import { IoMdArrowRoundBack, IoMdArrowRoundForward } from "react-icons/io";
+import {
+  apiCall,
+  nextPage,
+  previusPage,
+  filterZA,
+  filterAZ,
+  filTemp,
+  getAll,
+} from "../../store/actions";
 const Home = () => {
-  const [dog, setDog] = useState([]);
-  const [page, setPage] = useState(1);
-
+  const dispatch = useDispatch();
+  const dog = useSelector((store) => store.dogs.dogs);
+  const page = useSelector((store) => store.dogs.page);
   useEffect(() => {
-    apiCall();
+    dispatch(apiCall(`?page=${page}`));
   }, [page]);
-  const apiCall = async () => {
-    if (page > 1) {
-      const data = await fetch("http://localhost:3001/dog/" + page);
-      const dogs = await data.json();
-      return setDog(dogs);
-    }
-    const data = await fetch("http://localhost:3001/dogs");
-    const dogs = await data.json();
-    setDog(dogs);
-  };
-  const next = (value) => {
-    setPage(page + value);
-  };
-  const previous = (value) => {
-    setPage(page - value);
-  };
+  useEffect(() => {
+    dispatch(getAll());
+  }, []);
+
   return (
     <div>
       <h1>Home</h1>
@@ -31,10 +30,19 @@ const Home = () => {
         {dog.map((i) => (
           <Card dog={i} key={i.id} />
         ))}
-        {page !== 1 && <button onClick={() => previous(1)}>-1</button>}
-        <button>{page}</button>
-        <button onClick={() => next(1)}>+1</button>
       </div>
+      <button onClick={() => dispatch(filterAZ(`?page=${page}`))}>A-Z</button>
+      <button onClick={() => dispatch(filterZA(`?page=${page}`))}>Z-A</button>
+      <button onClick={() => dispatch(filTemp("Brave"))}>Brave</button>
+      {page != 1 && (
+        <button onClick={() => dispatch(previusPage())}>
+          <IoMdArrowRoundBack></IoMdArrowRoundBack>
+        </button>
+      )}
+      <button>{page}</button>
+      <button onClick={() => dispatch(nextPage())}>
+        <IoMdArrowRoundForward></IoMdArrowRoundForward>
+      </button>
     </div>
   );
 };

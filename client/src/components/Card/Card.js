@@ -7,7 +7,9 @@ export default function Card(props) {
     <div className={styles.card}>
       <img src={dog.image} alt={dog.name} className={styles.image}></img>
       <p className={styles.name}>{dog.name}</p>
-      <p>{dog.temperament}</p>
+      {dog.temperament.map((i) => (
+        <span key={i}>{i}</span>
+      ))}
     </div>
   );
 }
