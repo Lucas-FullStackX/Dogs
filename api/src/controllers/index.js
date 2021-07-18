@@ -105,7 +105,7 @@ async function addDog(req, res, next) {
       // =
       await createdTemperament.addDog(createdDog);
     }
-    res.send("creado");
+    res.status(200).send("creado");
   } catch (error) {
     next(error);
   }

@@ -1,9 +1,9 @@
 /* eslint-disable jsx-a11y/anchor-has-content */
-import React, { useEffect } from "react";
+import React from "react";
 import { GrLinkNext } from "react-icons/gr";
 import { Link } from "react-router-dom";
 import styles from "./start.module.css";
-function start() {
+function Start() {
   return (
     <div>
       <img
@@ -11,6 +11,7 @@ function start() {
         src="https://dogemuchwow.com/wp-content/uploads/2025/03/starry-doge-nightsky.jpg"
         alt="img"
       />
+      <h1>Welcome</h1>
       <Link to="/home">
         <GrLinkNext></GrLinkNext>
       </Link>
@@ -18,4 +19,4 @@ function start() {
   );
 }
 
-export default start;
+export default Start;

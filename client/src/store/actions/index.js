@@ -1,18 +1,19 @@
 import axios from "axios";
-import { BASE_URL, ALL_URL } from "../../const";
+import { BASE_URL } from "../../const";
 const GET_DOGS = "GET_DOGS";
 const NEXT = "NEXT";
 const PREVIUS = "PREVIUS";
-const AZ = "AZ";
-const ZA = "ZA";
-const TEMP = "TEMP";
-const GET_ALL = "GET_ALL";
 
-const getAll = () => async (dispatch, getState) => {
+const GET_ALL = "GET_ALL";
+const GET_DETAILS = "GET_DETAILS";
+const FILTERS = "FILTERS";
+const GET_TEMPERAMENTS = "GET_TEMPERAMENTS";
+
+const getDetails = (id) => async (dispatch, getState) => {
   try {
-    const res = await axios.get(ALL_URL);
+    const res = await axios.get(`${BASE_URL}/${id}`);
     dispatch({
-      type: GET_ALL,
+      type: GET_DETAILS,
       payload: res.data,
     });
   } catch (err) {
@@ -21,7 +22,6 @@ const getAll = () => async (dispatch, getState) => {
 };
 const apiCall = (p) => async (dispatch, getState) => {
   try {
-    console.log(p);
     const res = await axios.get(BASE_URL + p);
     dispatch({
       type: GET_DOGS,
@@ -33,7 +33,6 @@ const apiCall = (p) => async (dispatch, getState) => {
 };
 const search = (n) => async (dispatch, getState) => {
   try {
-    console.log(n);
     const res = await axios.get(`${BASE_URL}?name=${n}`);
     dispatch({
       type: GET_DOGS,
@@ -53,47 +52,30 @@ const nextPage = () => async (dispatch, getState) => {
     console.log(err);
   }
 };
-const filterAZ = (p) => async (dispatch, getState) => {
-  try {
-    const res = await axios.get(BASE_URL + p);
-    const az = res.data.sort((i, j) => {
-      if (i.name < j.name) {
-        return -1;
-      }
-      if (i.name > j.name) {
-        return 1;
-      }
-      return 0;
-    });
+//new
+export function filters(nameFront, temperament, sort, order) {
+  return async (dispatch) =>
     dispatch({
-      type: AZ,
-      payload: az,
+      type: FILTERS,
+      name: await getBreedsName(nameFront),
+      temperament: temperament,
+      sort: sort,
+      order: order,
     });
-  } catch (err) {
-    console.log(err);
-  }
+}
+export function getTemperaments() {
+  return (dispatch) => {
+    axios.get(`http://localhost:3001/temperament`).then((response) => {
+      dispatch({ type: GET_TEMPERAMENTS, payload: response.data });
+    });
+  };
+}
+const getBreedsName = async function (nameFront) {
+  const response = await axios.get(`${BASE_URL}?name=${nameFront}`);
+  const breeds = response.data;
+  return breeds;
 };
-const filterZA = (p) => async (dispatch, getState) => {
-  try {
-    const res = await axios.get(BASE_URL + p);
-    const za = res.data.sort((i, j) => {
-      if (i.name < j.name) {
-        return 1;
-      }
-      if (i.name > j.name) {
-        return -1;
-      }
-      return 0;
-    });
-    dispatch({
-      type: ZA,
-      payload: za,
-    });
-  } catch (err) {
-    console.log(err);
-  }
-};
-
+//old
 const previusPage = () => async (dispatch, getState) => {
   try {
     dispatch({
@@ -104,32 +86,9 @@ const previusPage = () => async (dispatch, getState) => {
     console.log(err);
   }
 };
-const filTemp = (p) => async (dispatch, getState) => {
-  try {
-    dispatch({
-      type: TEMP,
-      payload: p,
-    });
-  } catch (err) {
-    console.log(err);
-  }
-};
-const getTemps = async function (arr, temp) {
-  let counter = [];
-  for (let i = 0; i < arr.length; i++) {
-    let nose = await arr[i].temperament.filter((a) => a === temp);
-    if (nose.length > 0) {
-      counter.push(arr[i]);
-    }
-  }
-  return counter;
-};
 export {
-  getAll,
-  getTemps,
-  filTemp,
-  filterZA,
-  filterAZ,
+  FILTERS,
+  getDetails,
   search,
   previusPage,
   apiCall,
@@ -137,8 +96,7 @@ export {
   GET_DOGS,
   NEXT,
   PREVIUS,
-  AZ,
-  ZA,
-  TEMP,
   GET_ALL,
+  GET_TEMPERAMENTS,
+  GET_DETAILS,
 };

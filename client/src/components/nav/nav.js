@@ -1,20 +1,19 @@
-import React, { useEffect } from "react";
+import React from "react";
+import { Link } from "react-router-dom";
 import { GiJumpingDog } from "react-icons/gi";
-import Search from "../Search/Search";
 import styles from "./nav.module.css";
 
-function nav() {
+const Nav = () => {
   return (
     <div>
       <ul className={styles.menuBar}>
         <GiJumpingDog></GiJumpingDog>
-        <li>Dogs</li>
+        <Link to="/home">Dogs</Link>
         <li>Search</li>
-        <li>New Dog</li>
-        <Search></Search>
+        <Link to="/home/newdog">New Dog</Link>
       </ul>
     </div>
   );
-}
+};
 
-export default nav;
+export default Nav;

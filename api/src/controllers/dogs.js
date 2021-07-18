@@ -28,14 +28,14 @@ function dogs(req, res, next) {
           o.name.toLowerCase().includes(name.toLowerCase())
         );
         resultDog(find);
-        return res.json(find.slice(0, 8));
+        return res.status(200).json(find.slice(0, 8));
       }
       if (page) {
         resultDog(response);
-        return res.json(response.slice(8 * (page - 1), 8 * page));
+        return res.status(200).json(response.slice(8 * (page - 1), 8 * page));
       }
       resultDog(response);
-      return res.json(response.slice(0, 8));
+      return res.status(200).json(response.slice(0, 8));
     })
     .catch((err) => next(err));
 }
@@ -56,14 +56,15 @@ function pages(req, res, next) {
 //funcion rductora
 function arrs(str) {
   let arr = [];
-  arr.push(str);
-  return arr.join(", ").split(", ");
+  for (let i = 0; i < str.length; i++) {
+    arr.push(str[i].name);
+  }
+  return arr.join(", ");
 }
 
 async function resultDog(dogs) {
   for (var dog of dogs) {
     if (typeof dog.id === "number") {
-      dog.temperament = arrs(dog.temperament);
       delete dog.origin;
       delete dog.breed_group;
       delete dog.reference_image_id;
@@ -78,11 +79,7 @@ async function resultDog(dogs) {
     } else {
       delete dog.dataValues.createdAt;
       delete dog.dataValues.updatedAt;
-      if (Array.isArray(dog.dataValues.temperaments)) {
-        dog.dataValues.temperament = dog.dataValues.temperaments.join(", ");
-      } else {
-        dog.dataValues.temperament = dog.dataValues.temperaments;
-      }
+      dog.dataValues.temperament = arrs(dog.dataValues.temperaments);
       delete dog.dataValues.temperaments;
     }
   }

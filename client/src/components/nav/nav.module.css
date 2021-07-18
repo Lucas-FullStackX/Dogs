@@ -41,6 +41,38 @@
     box-shadow: 0px 3px 20px 0px black;
     transform: scale(1.2);
   }
+  .menuBar a {
+    list-style: none;
+    color: white;
+    font-family: sans-serif;
+    font-weight: bold;
+    padding: 12px 16px;
+    margin: 0 58px;
+    position: relative;
+    cursor: pointer;
+    white-space: nowrap;
+    text-decoration: none
+  }
+  .menuBar a::before {
+    content: " ";
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    z-index: -1;
+    transition: 0.2s;
+    border-radius: 25px;
+  }
+  .menuBar a:hover {
+    color: black;
+    text-decoration: none
+  }
+  .menuBar a:any-link:hover::before {
+    background: linear-gradient(to bottom, #e8edec, #d2d1d3);
+    box-shadow: 0px 3px 20px 0px black;
+    transform: scale(1.2);
+  }
   .menuBar svg{
       color: #fff;
       font-size: 30px;

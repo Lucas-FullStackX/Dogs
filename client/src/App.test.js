@@ -1,8 +1,20 @@
-import { render, screen } from '@testing-library/react';
-import App from './App';
+import { render, screen } from "@testing-library/react";
 
-test('renders learn react link', () => {
-  render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+import Footer from "./components/Footer/Footer";
+
+import NotFoundPage from "./components/NotFoundPage/NotFoundPage";
+
+beforeAll(() => {
+  Object.defineProperty(HTMLMediaElement.prototype, "muted", {
+    set: jest.fn(),
+  });
+});
+
+test("Renders the Footer component", () => {
+  render(<Footer />);
+  expect(screen.getAllByText("About Me")).toHaveLength(1);
+});
+test("Renders NotFoundPage", () => {
+  render(<NotFoundPage />);
+  expect(screen.getAllByText("Error 404")).toHaveLength(1);
 });
