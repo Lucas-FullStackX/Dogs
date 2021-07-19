@@ -15,8 +15,8 @@ const Dog = (props) => {
   }, [dispatch, id]);
   return (
     <div>
+      {loading && <Loading />}
       <div className={styles.card}>
-        {loading && <Loading />}
         {dogDetails && (
           <>
             <img src={dogDetails.image} alt={dogDetails.name} />
@@ -26,7 +26,7 @@ const Dog = (props) => {
               <p>{`${dogDetails.height} Inches`}</p>
               <h4>Weight:</h4>
               <p>{dogDetails.weight} Pounds</p>
-              <h4>Temperaments:</h4>
+              <h4 className={styles.tempsTitle}>Temperaments:</h4>
               <p className={styles.temps}>{dogDetails.temperament}</p>
               <h4>Life Span:</h4>
               <p>{dogDetails.years}</p>

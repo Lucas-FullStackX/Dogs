@@ -22,6 +22,16 @@
     margin: 5px;
     color: rgb(45, 103, 230);
 }
+.arrow:hover{
+    font-size: 18px;
+    background-color: rgb(45, 103, 230);
+    border-style: none;
+    width: 30px;
+    height: 30px;
+    border-radius: 10%;
+    margin: 5px;
+    color: #fff;
+}
 .main{
     color:#fff;
     font-size: 18px;

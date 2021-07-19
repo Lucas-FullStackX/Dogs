@@ -4,6 +4,7 @@ import {
   PREVIUS,
   FILTERS,
   GET_DETAILS,
+  LOADING,
   GET_TEMPERAMENTS,
 } from "../actions/index";
 const initialState = {
@@ -11,7 +12,7 @@ const initialState = {
   dogs: [],
   temperaments: [],
   page: 1,
-  loading: true,
+  loading: false,
 };
 function rootReducer(state = initialState, action) {
   switch (action.type) {
@@ -26,6 +27,11 @@ function rootReducer(state = initialState, action) {
         ...state,
         dogs: action.payload,
         loading: false,
+      };
+    case LOADING:
+      return {
+        ...state,
+        loading: true,
       };
     case GET_DETAILS:
       return {

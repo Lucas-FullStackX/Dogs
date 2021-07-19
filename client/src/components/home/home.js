@@ -10,12 +10,14 @@ const Home = () => {
   const dispatch = useDispatch();
   const dog = useSelector((store) => store.dogs.dogs);
   const page = useSelector((store) => store.dogs.page);
+  const loading = useSelector((store) => store.dogs.loading);
   useEffect(() => {
     dispatch(apiCall(`?page=${page}`));
   }, [dispatch, page]);
 
   return (
     <div className={styles.home}>
+      {loading && <Loading />}
       <div className={styles.cards}>
         {dog ? dog.map((i) => <Card dog={i} key={i.id} />) : <Loading />}
       </div>

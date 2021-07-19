@@ -1,6 +1,23 @@
+.contend{
+    border-radius: 25px;
+    background-color: rgba(0, 0, 0, 0.4);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    align-items: center;
+    padding: 0 10px;
+    margin: 0 25px;
+}
+.contend div{
+    margin: 10px 0
+}
+.searchBar{
+    padding-top: 15px 
+}
 .wrap {
-    
-    width: 350px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    width: 100%;
     left: 0;
     margin: 0 auto;
   }
@@ -8,9 +25,11 @@
   .select {
       position: relative;
       width: 350px;
+      padding-bottom: 10px;
   }
   
   .select_text {
+      color: #fff;
       position: relative;
       font-family: inherit;
       background-color: transparent;
@@ -19,9 +38,11 @@
       font-size: 18px;
       border-radius: 0;
       border: none;
-      border-bottom: 1px solid rgba(0,0,0, 0.12);
+      border-bottom: 1px solid rgba(99, 213, 248, 0.329);
   }
-  
+  .select_text option{
+      color: #000
+  }
   .select_text:focus {
       outline: none;
       border-bottom: 1px solid rgba(0,0,0, 0);
@@ -36,14 +57,13 @@
       position: absolute;
       top: 18px;
       right: 10px;
-      /* Styling the down arrow */
       width: 0;
       height: 0;
       padding: 0;
       content: '';
       border-left: 6px solid transparent;
       border-right: 6px solid transparent;
-      border-top: 6px solid rgba(0, 0, 0, 0.12);
+      border-top: 6px solid rgb(255, 255, 255);
       pointer-events: none;
   }
   
@@ -81,3 +101,40 @@
       pointer-events: none;
       opacity: 0.5;
   }
+
+
+.search__input {
+    width: 500px;
+    padding: 12px 24px;
+    background-color: transparent;
+    transition: transform 250ms ease-in-out;
+    font-size: 14px;
+    line-height: 18px;
+    color: #ffffff;
+    background-color: transparent;
+    background-repeat: no-repeat;
+    background-size: 18px 18px;
+    background-position: 95% center;
+    border-top-left-radius:50px ;
+    border-bottom-left-radius:50px ;
+    border-bottom: 1px solid #ffffff;
+    border-top: 1px solid #ffffff;
+    border-left: 1px solid #ffffff;
+    border-right: none;
+    transition: all 250ms ease-in-out;
+    backface-visibility: hidden;
+    transform-style: preserve-3d;
+}
+
+.searchButton{
+    color: #fff;
+    height: 44px;
+    width:  45px;
+    background-color: rgba(255, 255, 255, 0);
+    border-top-right-radius:50px ;
+    border-bottom-right-radius:50px ;
+    border-bottom: 1px solid #fff;
+    border-top: 1px solid #fff;
+    border-left: 1px solid #fff;
+    border-left: none;
+}

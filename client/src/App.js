@@ -7,7 +7,6 @@ import Start from "./components/Start/Start";
 import Menu from "./components/Menu/Menu";
 import NotFoundPage from "./components/NotFoundPage/NotFoundPage";
 import Form from "./components/Form/Form";
-import Footer from "./components/Footer/Footer";
 import Dog from "./components/Dog/Dog";
 function App() {
   return (
@@ -21,7 +20,6 @@ function App() {
         <Route exact path="/home/:id" component={Dog}></Route>
         <Route path="*" component={NotFoundPage}></Route>
       </Switch>
-      {/* <Route path="/home" component={Footer}></Route> */}
     </div>
   );
 }

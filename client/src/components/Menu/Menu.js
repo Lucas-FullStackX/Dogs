@@ -31,11 +31,15 @@ export default function HomeFilters() {
 
   return (
     <>
-      <div>
+      <div className={styles.contend}>
         <div>
-          <form onSubmit={onSubmitSearch}>
-            <input id="searchByName" type="text"></input>
-            <button className="searchButton" type="submit">
+          <form onSubmit={onSubmitSearch} className={styles.searchBar}>
+            <input
+              id="searchByName"
+              type="text"
+              className={styles.search__input}
+            ></input>
+            <button className={styles.searchButton} type="submit">
               <FaSearch />
             </button>
           </form>
@@ -45,9 +49,9 @@ export default function HomeFilters() {
             <select id="sort" className={styles.select_text}>
               <option value="name">Name</option>
               <option value="weight">Weight</option>
-              <span className={styles.select_highlight}></span>
-              <span className={styles.select_bar}></span>
             </select>
+            <span className={styles.select_highlight}></span>
+            <span className={styles.select_bar}></span>
           </div>
           <div className={styles.select}>
             <select id="order" className={styles.select_text}>

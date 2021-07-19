@@ -6,7 +6,7 @@ export default function Footer() {
   return (
     <div className={styles.footer}>
       <div className={styles.footer_right}>
-        <a href="https://github.com/Lucas-FullStackX">
+        <a href="https://www.linkedin.com/in/lucas-leguizamo-603117208/">
           <SiLinkedin></SiLinkedin>
         </a>
         <a href="https://github.com/Lucas-FullStackX">

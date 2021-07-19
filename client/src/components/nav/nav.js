@@ -7,10 +7,15 @@ const Nav = () => {
   return (
     <div>
       <ul className={styles.menuBar}>
-        <GiJumpingDog></GiJumpingDog>
-        <Link to="/home">Dogs</Link>
-        <li>Search</li>
-        <Link to="/home/newdog">New Dog</Link>
+        <Link to="/home">
+          <GiJumpingDog></GiJumpingDog>
+        </Link>
+        <Link to="/home" className={styles.link}>
+          Dogs
+        </Link>
+        <Link to="/home/newdog" className={styles.link}>
+          New Dog
+        </Link>
       </ul>
     </div>
   );

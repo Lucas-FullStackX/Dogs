@@ -1,9 +1,9 @@
 import axios from "axios";
-import { BASE_URL } from "../../const";
+import { BASE_URL, TEMP_URL } from "../../const";
 const GET_DOGS = "GET_DOGS";
 const NEXT = "NEXT";
 const PREVIUS = "PREVIUS";
-
+const LOADING = "LOADING";
 const GET_ALL = "GET_ALL";
 const GET_DETAILS = "GET_DETAILS";
 const FILTERS = "FILTERS";
@@ -11,6 +11,7 @@ const GET_TEMPERAMENTS = "GET_TEMPERAMENTS";
 
 const getDetails = (id) => async (dispatch, getState) => {
   try {
+    setLoading();
     const res = await axios.get(`${BASE_URL}/${id}`);
     dispatch({
       type: GET_DETAILS,
@@ -22,18 +23,8 @@ const getDetails = (id) => async (dispatch, getState) => {
 };
 const apiCall = (p) => async (dispatch, getState) => {
   try {
+    setLoading();
     const res = await axios.get(BASE_URL + p);
-    dispatch({
-      type: GET_DOGS,
-      payload: res.data,
-    });
-  } catch (err) {
-    console.log(err);
-  }
-};
-const search = (n) => async (dispatch, getState) => {
-  try {
-    const res = await axios.get(`${BASE_URL}?name=${n}`);
     dispatch({
       type: GET_DOGS,
       payload: res.data,
@@ -44,6 +35,7 @@ const search = (n) => async (dispatch, getState) => {
 };
 const nextPage = () => async (dispatch, getState) => {
   try {
+    setLoading();
     dispatch({
       type: NEXT,
       payload: 1,
@@ -52,9 +44,16 @@ const nextPage = () => async (dispatch, getState) => {
     console.log(err);
   }
 };
+
+function setLoading() {
+  return (dispatch) => {
+    dispatch({ type: LOADING });
+  };
+}
 //new
 export function filters(nameFront, temperament, sort, order) {
-  return async (dispatch) =>
+  return async (dispatch) => {
+    setLoading();
     dispatch({
       type: FILTERS,
       name: await getBreedsName(nameFront),
@@ -62,10 +61,11 @@ export function filters(nameFront, temperament, sort, order) {
       sort: sort,
       order: order,
     });
+  };
 }
 export function getTemperaments() {
   return (dispatch) => {
-    axios.get(`http://localhost:3001/temperament`).then((response) => {
+    axios.get(TEMP_URL).then((response) => {
       dispatch({ type: GET_TEMPERAMENTS, payload: response.data });
     });
   };
@@ -78,6 +78,7 @@ const getBreedsName = async function (nameFront) {
 //old
 const previusPage = () => async (dispatch, getState) => {
   try {
+    setLoading();
     dispatch({
       type: PREVIUS,
       payload: 1,
@@ -87,9 +88,9 @@ const previusPage = () => async (dispatch, getState) => {
   }
 };
 export {
+  LOADING,
   FILTERS,
   getDetails,
-  search,
   previusPage,
   apiCall,
   nextPage,
