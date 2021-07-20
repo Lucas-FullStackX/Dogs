@@ -25,6 +25,7 @@
     width:45%;
 }
 .contend h2{
+    height: 0;
     width:100%;
     margin: 0;
     padding-top: 20px;
@@ -45,12 +46,13 @@
     margin: 0 10px;
     text-align: left;
     color: #000;
-
+    height: 0;
 }
 .temps{
-
     text-align: left;
+    width:200px;
     grid-column-end: 3;
+    height: 0;
 }
 .tempsTitle{
     text-align: left;

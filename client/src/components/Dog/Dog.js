@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import styles from "./Dog.module.css";
 import { useDispatch, useSelector } from "react-redux";
-import { getDetails } from "../../store/actions";
+import { getDetails, setLoading } from "../../store/actions";
 import Loading from "../Loading/Loading";
 import Footer from "../Footer/Footer";
 
@@ -11,12 +11,13 @@ const Dog = (props) => {
   const dogDetails = useSelector((state) => state.dogs.dogDetails);
   const dispatch = useDispatch();
   useEffect(() => {
+    dispatch(setLoading());
     dispatch(getDetails(id));
   }, [dispatch, id]);
   return (
     <div>
-      {loading && <Loading />}
       <div className={styles.card}>
+        {loading && <Loading />}
         {dogDetails && (
           <>
             <img src={dogDetails.image} alt={dogDetails.name} />

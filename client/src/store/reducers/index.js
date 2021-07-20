@@ -12,7 +12,7 @@ const initialState = {
   dogs: [],
   temperaments: [],
   page: 1,
-  loading: false,
+  loading: true,
 };
 function rootReducer(state = initialState, action) {
   switch (action.type) {

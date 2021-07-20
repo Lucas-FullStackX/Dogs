@@ -10,7 +10,7 @@
     width: 100%;
     text-align: left;
     font: normal 16px sans-serif;
-    padding: 45px 50px;
+    padding: 45px 50px 30px 50px;
   }
   
   .footer .footer_left p {
@@ -93,4 +93,8 @@
       line-height: 1.8;
     }
   }
-
+.footer_left svg{
+  color:#fff;
+  font-size: 25px;
+  margin: 0 5px;
+}

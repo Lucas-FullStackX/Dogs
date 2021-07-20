@@ -11,7 +11,6 @@ const GET_TEMPERAMENTS = "GET_TEMPERAMENTS";
 
 const getDetails = (id) => async (dispatch, getState) => {
   try {
-    setLoading();
     const res = await axios.get(`${BASE_URL}/${id}`);
     dispatch({
       type: GET_DETAILS,
@@ -23,7 +22,6 @@ const getDetails = (id) => async (dispatch, getState) => {
 };
 const apiCall = (p) => async (dispatch, getState) => {
   try {
-    setLoading();
     const res = await axios.get(BASE_URL + p);
     dispatch({
       type: GET_DOGS,
@@ -35,7 +33,6 @@ const apiCall = (p) => async (dispatch, getState) => {
 };
 const nextPage = () => async (dispatch, getState) => {
   try {
-    setLoading();
     dispatch({
       type: NEXT,
       payload: 1,
@@ -44,16 +41,19 @@ const nextPage = () => async (dispatch, getState) => {
     console.log(err);
   }
 };
+const setLoading = () => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: LOADING,
+    });
+  } catch (err) {
+    console.log(err);
+  }
+};
 
-function setLoading() {
-  return (dispatch) => {
-    dispatch({ type: LOADING });
-  };
-}
 //new
 export function filters(nameFront, temperament, sort, order) {
   return async (dispatch) => {
-    setLoading();
     dispatch({
       type: FILTERS,
       name: await getBreedsName(nameFront),
@@ -78,7 +78,6 @@ const getBreedsName = async function (nameFront) {
 //old
 const previusPage = () => async (dispatch, getState) => {
   try {
-    setLoading();
     dispatch({
       type: PREVIUS,
       payload: 1,
@@ -92,6 +91,7 @@ export {
   FILTERS,
   getDetails,
   previusPage,
+  setLoading,
   apiCall,
   nextPage,
   GET_DOGS,

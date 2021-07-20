@@ -3,7 +3,12 @@ import { useDispatch, useSelector } from "react-redux";
 import Card from "../Card/Card";
 import styles from "./home.module.css";
 import { IoMdArrowRoundBack, IoMdArrowRoundForward } from "react-icons/io";
-import { apiCall, nextPage, previusPage } from "../../store/actions";
+import {
+  apiCall,
+  nextPage,
+  previusPage,
+  setLoading,
+} from "../../store/actions";
 import Loading from "../Loading/Loading";
 import Footer from "../Footer/Footer";
 const Home = () => {
@@ -12,6 +17,7 @@ const Home = () => {
   const page = useSelector((store) => store.dogs.page);
   const loading = useSelector((store) => store.dogs.loading);
   useEffect(() => {
+    dispatch(setLoading());
     dispatch(apiCall(`?page=${page}`));
   }, [dispatch, page]);
 
@@ -19,7 +25,7 @@ const Home = () => {
     <div className={styles.home}>
       {loading && <Loading />}
       <div className={styles.cards}>
-        {dog ? dog.map((i) => <Card dog={i} key={i.id} />) : <Loading />}
+        {dog && dog.map((i) => <Card dog={i} key={i.id} />)}
       </div>
       {page !== 1 && (
         <button
