@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getTemperaments } from "../../store/actions";
+import { POST_DOG_URL, HOME } from "../../const";
 import Footer from "../Footer/Footer";
 import styles from "./Form.module.css";
 export default function Form() {
@@ -30,12 +31,9 @@ export default function Form() {
     try {
       input.temperament.push(newTemp.temp);
       setCreado(true);
-      let post = await axios.post("http://localhost:3001/dog", input);
+      let post = await axios.post(POST_DOG_URL, input);
       console.log(post);
-      setTimeout(
-        () => (document.location.href = "http://localhost:3000/home"),
-        1000
-      );
+      setTimeout(() => (document.location.href = HOME), 1000);
     } catch (err) {
       console.log(err);
     }
