@@ -1,6 +1,6 @@
-const BASE_URL = "http://localhost:3001/dogs";
-const TEMP_URL = "http://localhost:3001/temperament";
-const POST_DOG_URL = "http://localhost:3001/dog";
+const BASE_URL = "https://pi-api-dog.herokuapp.com/dogs";
+const TEMP_URL = "https://pi-api-dog.herokuapp.com/temperament";
+const POST_DOG_URL = "https://pi-api-dog.herokuapp.com/dog";
 
 module.exports = {
   BASE_URL,
